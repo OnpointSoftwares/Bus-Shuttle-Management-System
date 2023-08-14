@@ -9,6 +9,7 @@
 		$date = $_POST['date'];
 		$via_time = $_POST['via-time'];
 		$bus_detail = $_POST['bus-detail'];
+		$cost = $_POST['cost'];
 		$max_seats = $_POST['max_seats'];
 		$image = $_FILES['image']['name'];
 		$tmp_image = $_FILES['image']['tmp_name'];
@@ -20,12 +21,17 @@
 			echo "**All Fields Mandatory";
 		}
 		else {
-			$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image, post_content, post_source, post_destination, post_via, post_via_time, max_seats, available_seats) VALUES('$category', '$title', '$admin', '$date', '$image', '$bus_detail', '$source', '$destination', '$intermediate', '$via_time', '$max_seats', '$max_seats')";
+			$query = "INSERT INTO posts(post_category_id, post_title, post_author, post_date, post_image,cost, post_content, post_source, post_destination, post_via, post_via_time, max_seats, available_seats) VALUES('$category', '$title', '$admin', '$date', '$image','$cost', '$bus_detail', '$source', '$destination', '$intermediate', '$via_time', '$max_seats', '$max_seats')";
 
 			$bus_entry = mysqli_query($connection,$query);
 
 			if (!$bus_entry) {
 				die("Query Failed");
+			}
+			else{
+				$query2 = "INSERT INTO cost(start,stopage,category,cost) VALUES('$source', '$destination', '$category','$cost')";
+				$cost_entry = mysqli_query($connection,$query2);
+			
 			}
 		}
 	}
@@ -97,7 +103,10 @@
 		<label for="Max Seats">Max Seats</label>
 		<input type="text" class="form-control" name="max_seats" placeholder="Max Seats Available">
 	</div>
-
+	<div class="form-group">
+		<label for="bus-date">Cost</label>
+		<input type="text" style="margin-top: 10px;" name="cost" class="form-control" id="cost" placeholder="0.00" >
+	</div>
 	<div class="form-group">
 		<label for="bus-image">Bus Image</label>
 		<input type="file" name="image" >

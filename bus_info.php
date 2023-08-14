@@ -1,8 +1,8 @@
 <?php include "includes/db.php"; ?>
 <?php include "includes/header.php"; ?>
-    
     <!-- Navigation -->
     <?php include "includes/navigation.php"; ?>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.js" integrity="sha512-8Z5++K1rB3U+USaLKG6oO8uWWBhdYsM3hmdirnOEWp8h2B1aOikj5zBzlXs8QOrvY9OxEnD2QDkbSKKpfqcIWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <!-- Page Content -->
     <div class="container">
@@ -16,13 +16,11 @@
 
                     if(isset($_GET['bus_id'])) {
                         $selected_bus = $_GET['bus_id'];
-                    }
-
-                    $query = "SELECT *  FROM  posts WHERE post_id = $selected_bus ";
-
+                    $query = "SELECT *  FROM  posts WHERE post_id =$selected_bus";
                     $select_all_bus_query = mysqli_query($connection,$query);
 
-                    while($row = mysqli_fetch_assoc($select_all_bus_query)) {
+                    while($row = mysqli_fetch_assoc($select_all_bus_query)) 
+                    {
                         $bus_title = $row['post_title'];
                         $bus_author = $row['post_author'];
                         $bus_date = $row['post_date'];
@@ -34,6 +32,7 @@
                         $bus_cat = $row['post_category_id'];
                         $available_seats = $row['available_seats'];
                         $max_seats = $row['max_seats'];
+                        $_SESSION['cost']=$row['cost'];
                       $bus_stations = explode(" ",$bus_via);
                       $bus_times = explode(" ",$times);
                         ?>
@@ -166,8 +165,8 @@
                                     }
                                     $source = $_POST['source'];
                                     $destination = $_POST['destination'];
-                                    $cost = 0;
-
+                                    $cost = $_SESSION['cost'];
+                                    echo $cost;
 
                                     for ($i=0; $i < sizeof($bus_stations); $i++) { 
 
@@ -194,6 +193,7 @@
                                             break;
                                         }
                                     }
+                                }
                                     //echo $cost;
 
 
@@ -214,15 +214,27 @@
                                         $curr_name = $arr[$i];
                                         $curr_age = $arr1[$i];
                                         $user_id = $_SESSION['s_id'];
-
-                                        $query = "INSERT INTO orders(bus_id, user_id, user_name, user_age, source, destination,date,cost) VALUES($selected_bus, $user_id , '$curr_name', '$curr_age', '$source', '$destination', now(),$cost)";
+                                        $cost = $_SESSION['cost'];
+                                        $query = "INSERT INTO orders(bus_id, user_id, user_name, user_age, source, destination,date,cost) VALUES($selected_bus, $user_id , '$curr_name', '$curr_age', '$source', '$destination', now(),'$cost')";
 
                                         $query_seat_update = "UPDATE posts SET available_seats = $available_seats + $count WHERE post_id = $bus_id";
-
                                         //echo $arr[$i];
                                         //echo $_SESSION['s_id'];
                                         $update_seats_available = mysqli_query($connection,$query_seat_update);
-                                        $booking_query = mysqli_query($connection,$query);
+                                        $booking_query = mysqli_query($connection,$query);?>
+                                        <script>
+                                       var phone=prompt("Enter phone number");
+                                            $.ajax({
+                                          url:'mpesa.php',
+                                          type: "POST",
+                                          data:{phone:phone},
+                                          success: function(data)
+                                          {
+                                            alert("Booking successfull"); // show response from the php script.
+                                          }
+                                        }); 
+                                        </script>
+                                        <?php
                                         if (!$booking_query) {
                                             die("Query Failed" . mysqli_error($connection));
                                         }
@@ -236,12 +248,7 @@
                         <?php } ?>
 
                         <hr>
-                    <?php } ?>
-
-
-                    <!-- Blog Comments -->
-
-                <?php 
+                    <?php }
 
                     if (isset($_POST['submit_query'])) {
                         $user_name = ucfirst($_SESSION['s_username']) ;
