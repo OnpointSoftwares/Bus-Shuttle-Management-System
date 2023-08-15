@@ -44,7 +44,9 @@
                         <p class="lead">
                             by <a href="index.php"><?php echo $bus_author; ?></a>
                         </p>
-                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $bus_date; ?></p>
+                        <p><span class="glyphicon glyphicon-time"></span> Posted on <?php echo $bus_date; ?>
+                    Cost:<?php echo $_SESSION['cost']; ?>
+                    </p>
                         <hr>
                         <img class="img-responsive" src="images/<?php echo $bus_image; ?>" alt="">
 
@@ -107,7 +109,7 @@
 
                                 </form>
 
-                                <form action="bus_info.php?bus_id='<?php echo $selected_bus; ?>'&count=<?php echo $_POST['passenger_count'];?>" method="post" class="form-horizontal">
+                                <form action="bus_info.php?bus_id='<?php if(isset($selected_bus)){echo $selected_bus; }?>'&count=<?php echo $_POST['passenger_count'];?>" method="post" class="form-horizontal">
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="email">Source:</label>
                                         <div class="col-sm-10">
@@ -116,7 +118,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="email">Destination:</label>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-10"> <th>Cost</th>
                                             <input type="text" class="form-control" id="email" placeholder="Destination" name="destination">
                                         </div>
                                     </div>
@@ -230,7 +232,7 @@
                                           data:{phone:phone},
                                           success: function(data)
                                           {
-                                            alert("Booking successfull"); // show response from the php script.
+                                            alert(data); // show response from the php script.
                                           }
                                         }); 
                                         </script>

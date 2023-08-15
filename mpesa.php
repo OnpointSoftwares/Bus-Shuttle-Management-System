@@ -9,7 +9,7 @@ $Type_of_Transaction = 'CustomerPayBillOnline';
 $Token_URL = 'https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials';
 $phone_number = $_POST['phone'];
 $OnlinePayment = 'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest';
-$total_amount =$_SESSION['cost'];
+$total_amount = $_SESSION['cost'];
 $CallBackURL = 'https://2f50f430.ngrok.io/callback.php?key=bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919';
 $Time_Stamp = date("Ymdhis");
 $password = base64_encode($Business_Code . $Passkey . $Time_Stamp);

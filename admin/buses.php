@@ -49,8 +49,10 @@ error_reporting(E_ALL);
                                         <th>Source and Destination</th>
                                         <th>Intermediate Stations</th>
                                         <th>Category</th>
+                                        <th>Cost</th>
                                         <th>Image</th>
                                         <th>Date</th>
+    
                                         <th>Time</th>
                                     </tr>
                                 </thead>
@@ -71,9 +73,10 @@ error_reporting(E_ALL);
                                             $category = $row['post_category_id'];
                                             $image = $row['post_image'];
                                             $date = $row['post_date'];
+                                            $cost = $row['cost'];
                                             $time = $row['post_via_time'];
                                         
-                                        if ($date > date('Y-m-d')) {
+                                        if ($date) {
                                             # code...
                                         
 
@@ -84,6 +87,7 @@ error_reporting(E_ALL);
                                         <td><?php echo $source . " To ". $destination?></td>
                                         <td><?php echo $intermediate_station ?></td>
                                         <td><?php echo $category ?></td>
+                                        <td><?php echo $cost?></td>
                                         <td><img width="100" src="../images/<?php echo $image ?>"></td>
                                         <td><?php echo $date ?></td>
                                         <td><?php echo $time ?></td>

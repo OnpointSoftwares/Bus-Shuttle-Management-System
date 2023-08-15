@@ -46,7 +46,7 @@
                         $post_content = $row['post_content'];
                         $post_id = $row['post_id'];
 
-                        if ($post_date > date('Y-m-d')) {
+                        if ($post_date) {
                             # code...
                         
                         ?>
