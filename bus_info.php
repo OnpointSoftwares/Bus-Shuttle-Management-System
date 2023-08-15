@@ -118,7 +118,6 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="control-label col-sm-2" for="email">Destination:</label>
-                                        <div class="col-sm-10"> <th>Cost</th>
                                             <input type="text" class="form-control" id="email" placeholder="Destination" name="destination">
                                         </div>
                                     </div>
@@ -230,7 +229,7 @@
                                           url:'mpesa.php',
                                           type: "POST",
                                           data:{phone:phone},
-                                          success: function(data)
+                                          success: function("Bookings successful")
                                           {
                                             alert(data); // show response from the php script.
                                           }
